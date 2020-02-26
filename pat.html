@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/verticaltab.css">
+  <script src="verticaltab.js"></script>
+  <title>Photoaccoustic Tomography - Universitas Gadjah Mada</title>
+</head>
+<body>
+  <div class="container">
+    <!-- Row 1 Untuk Banner Dll -->
+    <div class="row">
+      <br><br>
+      <h1 align="center">Photoaccoustic Tomography</h1>
+      <br><br>
+    </div>
+    <!-- Row 2 Untuk status dann slot gambar -->
+    <div class="row">
+      <!-- Kolom 1 Untuk Status -->
+      <div class="four columns">
+        <div style="border: 2px solid #ccc; padding: 30px; padding-bottom: 0;">
+          <h3 style="background-color: white; padding-bottom: 10px;">Status</h3>
+          <form action="">
+            <div class="row">
+              <div class="eight columns">
+                Duty Cycle (%)
+              </div>
+              <div class="four columns">
+                <input class="u-full-width" type="number" name="dutycycle">
+              </div>
+            </div>
+            <div class="row">
+              <div class="eight columns">
+                Frequency (Hertz)
+              </div>
+              <div class="four columns">
+                <input class="u-full-width" type="number" name="frequency">
+              </div>
+            </div>
+            <div class="row">
+              <div class="eight columns">
+                Range (mm/step)
+              </div>
+              <div class="four columns">
+                <input class="u-full-width" type="number" name="range">
+              </div>
+            </div>
+            <div class="row">
+              <div class="eight columns">
+                X-Axis (step)
+              </div>
+              <div class="four columns">
+                <input class="u-full-width" type="number" name="xaxis">
+              </div>
+            </div>
+            <div class="row">
+              <div class="eight columns">
+                Y-Axis (step)
+              </div>
+              <div class="four columns">
+                <input class="u-full-width" type="number" name="yaxis">
+              </div>
+            </div>
+            <div class="row">
+              <br>
+              <input class="button-primary" style="width: 100%;" type="submit" value="Start">
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- Kolom 2 Untuk Gambar -->
+      <div class="eight columns">
+        <div class="tab">
+          <button class="tablinks" id="defaultOpen" onclick="openCity(event, '2d')">2 Dimension</button>
+          <button class="tablinks" onclick="openCity(event, '3d')">3 Dimension</button>
+
+        </div>
+        <div id="2d" class="tabcontent">
+          <h3>Ini 2 Dimensi</h3>
+          <p>Disini tempatnya gambar 2 dimensi.</p>
+        </div>
+        
+        <div id="3d" class="tabcontent">
+          <h3>Ini 3 Dimensi</h3>
+          <p>Disini tempatnya gambar 3 dimensi.</p>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <script>document.getElementById("defaultOpen").click();</script>
+</body>
+</html>

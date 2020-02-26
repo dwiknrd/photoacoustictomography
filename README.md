@@ -1,2 +1,2 @@
 # photoacoustictomography
-Photoacoustic Tomography Software using Python
+Photoacoustic Tomography Software using Electron JS

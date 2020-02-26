@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/verticaltab.css">
+  <title>Photoaccoustic Tomography - Universitas Gadjah Mada</title>
+</head>
+<body>
+  <div class="container">
+    <!-- Row 1 Untuk Banner Dll -->
+    <div class="row">
+      <br><br>
+      <h1 align="center">Step Motor</h1>
+      <br><br>
+    </div>
+    <!-- Row 2 Untuk status dann slot gambar -->
+    <div class="row">
+      <!-- Kolom 1 Untuk Status -->
+      <div class="four columns">
+        <div style="border: 2px solid #ccc; padding: 30px; padding-bottom: 0;">
+          <form action="">
+            <div class="row">
+              <div class="eight columns">
+                Range (mm/step)
+              </div>
+              <div class="four columns">
+                <input class="u-full-width" type="number" name="range">
+              </div>
+            </div>
+            <div class="row">
+                <div class="eight columns">
+                  X-Axis (Step)
+                </div>
+                <div class="four columns">
+                  <input class="u-full-width" type="number" name="xaxis">
+                </div>
+            </div>
+            <div class="row">
+                <div class="eight columns">
+                    Y-Axis (Step)
+                </div>
+                <div class="four columns">
+                    <input class="u-full-width" type="number" name="yaxis">
+                </div>
+            </div>
+            <div class="row">
+              <br>
+              <input class="button-primary" style="width: 100%;" type="submit" value="Run">
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- Kolom 2 Untuk Gambar -->
+      <div class="eight columns">
+        <div class="statictabcontent">
+          <h3>Ini Progressnya</h3>
+          <p>Disini tempatnya progress setelah run</p>
+          <progress value="22" max="100"></progress>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
