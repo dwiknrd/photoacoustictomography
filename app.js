@@ -60,6 +60,7 @@ function detectorWindowFunc () {
     })
 
     detectorWindow.webContents.loadURL(`file://${__dirname}/detector.html`)
+    // detectorWindow.webContents.openDevTools()
 
     detectorWindow.on('close', function(evt) {
         evt.preventDefault();
