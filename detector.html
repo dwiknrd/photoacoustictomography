@@ -7,9 +7,38 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/skeleton.css">
   <link rel="stylesheet" href="css/verticaltab.css">
+  <style>
+    /* tell the SVG path to be a thin blue line without any area fill */
+    path {
+      stroke: steelblue;
+      stroke-width: 1;
+      fill: none;
+    }
+    
+    .axis {
+      shape-rendering: crispEdges;
+    }
+
+    .x.axis line {
+      stroke: lightgrey;
+    }
+
+    .x.axis .minor {
+      stroke-opacity: .5;
+    }
+
+    .x.axis path {
+      display: none;
+    }
+
+    .y.axis line, .y.axis path {
+      fill: none;
+      stroke: #000;
+    }
+  </style>
   <script src="p5/p5.min.js"></script>
   <script src="p5/p5.sound.min.js"></script>
-  <script src="detector.js"></script>
+  <script src="https://mbostock.github.com/d3/d3.v2.js"></script>
   <title>Photoaccoustic Tomography - Universitas Gadjah Mada</title>
 </head>
 <body>
@@ -43,10 +72,14 @@
       </div>
       <!-- Kolom 2 Untuk Gambar -->
       <div class="eight columns">
+        <div id="graph" class="aGraph" style="position:absolute;top:0px;left:0; float:left;">
+        </div>
         <div id='sketch-holder'>
         </div>
       </div>
     </div>
   </div>
+  <script src="detector.js"></script>
+  <script src="detectorprplot.js"></script>
 </body>
 </html>
