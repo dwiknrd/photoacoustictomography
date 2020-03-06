@@ -6,7 +6,7 @@ filterFreq = 10000
 
 //Plot Layout
 var layout = {
-  // title: 'Volume of Apple Shares Traded',
+  title: 'Spectrum Analyzer',
   xaxis: {
     title: 'Frequency',
     titlefont: {
@@ -105,7 +105,9 @@ function draw() {
     let h = -height + map(spectrum[i], 0, 255, height, 0);
     rect(x, height, width / spectrum.length, h);
   }
-  console.log(`Intensitas: ${Math.max(...spectrum)} dB`)
+  console.log(`Intensitas Maximum: ${Math.max(...spectrum)} dB`)
+  console.log(`Intensitas Pada Frekuensi ${filterFreq}: ${fft.getEnergy(filterFreq)}`);
+  
   
 }
 
@@ -117,8 +119,6 @@ lasersubmit.addEventListener('click', (event) => {
       laserduty : laserduty.value
   }
   ipcRenderer.send('submit-laser', data)
-
-  console.log(data)
 
   filterFreq = Number(data.laserfreq)
 
