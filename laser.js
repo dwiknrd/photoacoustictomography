@@ -12,7 +12,4 @@ lasersubmit.addEventListener('click', (event) => {
         laserduty : laserduty.value
     }
     ipcRenderer.send('submit-laser', data)
-
-    laserfreq.value = 0
-    laserduty.value = 0
 })

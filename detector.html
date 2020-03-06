@@ -38,6 +38,7 @@
   </style>
   <script src="p5/p5.min.js"></script>
   <script src="p5/p5.sound.min.js"></script>
+  <script src="plotly/plotly.min.js"></script>
   <script src="https://mbostock.github.com/d3/d3.v2.js"></script>
   <title>Photoaccoustic Tomography - Universitas Gadjah Mada</title>
 </head>
@@ -52,34 +53,24 @@
     <!-- Row 2 Untuk status dann slot gambar -->
     <div class="row">
       <!-- Kolom 1 Untuk Status -->
-      <div class="four columns">
-        <div style="border: 2px solid #ccc; padding: 30px; padding-bottom: 0;">
-          <form action="">
-            <div class="row">
-              <div class="eight columns">
-                Frequency (Hertz)
-              </div>
-              <div class="four columns">
-                <input class="u-full-width" type="number" name="dutycycle">
-              </div>
-            </div>
-            <div class="row">
-              <br>
-              <input class="button-primary" style="width: 100%;" type="submit" value="Run">
-            </div>
-          </form>
-        </div>
+      <div style="border: 2px solid #ccc; padding: 30px; padding-bottom: 0;">
+        <form action="">
+          Frequency (Hertz) <br>
+          <input id="laserfreq" class="u-full-width" type="number" name="frequency"><br>
+          Duty Cycle (%) <br>
+          <input id="laserduty" class="u-full-width" type="number" name="dutycycle">
+          <input id="detectorsubmit" class="button-primary" style="width: 100%;" type="submit" value="Run"><br>
+        </form>
       </div>
-      <!-- Kolom 2 Untuk Gambar -->
-      <div class="eight columns">
-        <div id="graph" class="aGraph" style="position:absolute;top:0px;left:0; float:left;">
-        </div>
-        <div id='sketch-holder'>
-        </div>
+      <br>
+      <div id="graph" class="aGraph" style="position:absolute;top:0px;left:0; float:left;">
+      </div>
+      <div id='chart' style="width: 100%; height: auto;">
+      </div>
+      <div id='sketch-holder' style="width: 100%; height: auto;">
       </div>
     </div>
   </div>
   <script src="detector.js"></script>
-  <script src="detectorprplot.js"></script>
 </body>
 </html>
