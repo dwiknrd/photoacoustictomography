@@ -4,6 +4,45 @@ let filter, filterFreq, filterWidth;
 let width1 = 0
 filterFreq = 10000
 
+//Plot Layout
+var layout = {
+  // title: 'Volume of Apple Shares Traded',
+  xaxis: {
+    title: 'Frequency',
+    titlefont: {
+      family: 'Arial, sans-serif',
+      size: 18,
+      color: 'black'
+    },
+    showticklabels: true,
+    tickangle: 'auto',
+    tickfont: {
+      family: 'Old Standard TT, serif',
+      size: 14,
+      color: 'black'
+    },
+    exponentformat: 'e',
+    showexponent: 'all'
+  },
+  yaxis: {
+    title: 'Amplitude',
+    titlefont: {
+      family: 'Arial, sans-serif',
+      size: 18,
+      color: 'black'
+    },
+    showticklabels: true,
+    tickangle: 45,
+    tickfont: {
+      family: 'Old Standard TT, serif',
+      size: 14,
+      color: 'black'
+    },
+    exponentformat: 'e',
+    showexponent: 'all'
+  }
+}
+
 const ipcRenderer = require('electron').ipcRenderer
 
 let laserfreq = document.getElementById('laserfreq')
@@ -29,9 +68,9 @@ function setup() {
   fft = new p5.FFT();
 
   Plotly.plot('chart',[{
-    y:[0,1,2,3,4,5,6,7,8],
+    y:fft.analyze(),
     type:'line'
-  }]);
+  }], layout);
 }
 
 function windowResized() {
@@ -63,7 +102,7 @@ function draw() {
   noStroke();
   for (let i = 0; i < spectrum.length; i++) {
     let x = map(i, 0, spectrum.length, 0, width);
-    let h = -height + map(spectrum[i], 0, 256, height, 0);
+    let h = -height + map(spectrum[i], 0, 255, height, 0);
     rect(x, height, width / spectrum.length, h);
   }
   console.log(`Intensitas: ${Math.max(...spectrum)} dB`)
@@ -86,5 +125,5 @@ lasersubmit.addEventListener('click', (event) => {
   Plotly.newPlot('chart',[{
     y:fft.analyze(),
     type:'line'
-  }]);
+  }], layout);
 })
