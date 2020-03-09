@@ -4,6 +4,13 @@ let filter, filterFreq, filterWidth;
 let width1 = 0
 filterFreq = 10000
 
+//Create array for x axes on plotly
+let arrayFreq = []
+
+for (let i = 1; i < 1025; i++) {
+  arrayFreq.push(Math.round(i * 21.5234375));
+}
+
 //Plot Layout
 var layout = {
   title: 'Spectrum Analyzer',
@@ -124,6 +131,10 @@ lasersubmit.addEventListener('click', (event) => {
 
   Plotly.newPlot('chart',[{
     y:fft.analyze(),
+    x: arrayFreq,
     type:'line'
   }], layout);
+
+  document.getElementById("displayintensity").innerHTML = `Max Intencity: ${Math.max(...fft.analyze())} dB`;
+  document.getElementById("displayfrequency").innerHTML = `Max Frequency: ${Math.round(fft.analyze().indexOf(Math.max(...fft.analyze()))*21.5234375 / 1000) * 1000} Hertz`;
 })
