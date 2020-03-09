@@ -28,7 +28,7 @@
                 Range (mm/step)
               </div>
               <div class="four columns">
-                <input class="u-full-width" type="number" name="range">
+                <input class="u-full-width" type="number" id="range">
               </div>
             </div>
             <div class="row">
@@ -36,7 +36,7 @@
                   X-Axis (Step)
                 </div>
                 <div class="four columns">
-                  <input class="u-full-width" type="number" name="xaxis">
+                  <input class="u-full-width" type="number" id="xaxis">
                 </div>
             </div>
             <div class="row">
@@ -44,12 +44,14 @@
                     Y-Axis (Step)
                 </div>
                 <div class="four columns">
-                    <input class="u-full-width" type="number" name="yaxis">
+                    <input class="u-full-width" type="number" id="yaxis">
                 </div>
             </div>
             <div class="row">
               <br>
-              <input class="button-primary" style="width: 100%;" type="submit" value="Run">
+              <input class="button-primary" style="width: 100%;" type="submit" value="Run" id="runbutton">
+              <br>
+              <input class="button" style="width: 100%;" type="submit" value="Abort" id="abortbutton">
             </div>
           </form>
         </div>
@@ -64,5 +66,6 @@
       </div>
     </div>
   </div>
+  <script src="stepmotor.js"></script>
 </body>
 </html>
