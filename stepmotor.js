@@ -4,8 +4,7 @@ let xaxis = document.getElementById('xaxis')
 let yaxis = document.getElementById('yaxis')
 let runbutton = document.getElementById('runbutton')
 let abortbutton = document.getElementById('abortbutton')
-
-//Control Button
+let savestepbutton = document.getElementById('savestepbutton')
 let plusY = document.getElementById('plusY')
 let minY = document.getElementById('minY')
 let plusX = document.getElementById('plusX')
@@ -16,16 +15,22 @@ runbutton.addEventListener('click', (event) => {
     event.preventDefault() 
   
     let data = {
-        range : range.value,
         xaxis : xaxis.value,
         yaxis : yaxis.value
     }
 
-    if (data.range * 10 % 2 != 0) {
-        alert('range harus kelipatan 0.2')
+    ipcRenderer.send('stepmotor-run', data)
+
+  })
+
+savestepbutton.addEventListener('click', (event) => {
+    event.preventDefault() 
+
+    if (range.value * 10 % 2 != 0) {
+        alert('Range harus bernilai kelipatan 0.2')
     }
     else {
-        ipcRenderer.send('run-stepmotor', data)
+        ipcRenderer.send('stepmotor-savestep', range.value)
     }
 
   })

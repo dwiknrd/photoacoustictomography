@@ -20,6 +20,23 @@
     <!-- Row 2 Untuk status dann slot gambar -->
     <div class="row">
       <div style="border: 2px solid #ccc; padding: 30px; padding-bottom: 0;">
+        <form action="">
+          <div class="row">
+            <div class="eight columns">
+              Range (mm/step)
+            </div>
+            <div class="four columns">
+              <input class="u-full-width" type="number" id="range">
+            </div>
+          </div>
+          <div class="row">
+            <br>
+            <input class="button-primary" style="width: 100%;" type="submit" value="Save" id="savestepbutton">
+          </div>
+        </form>
+      </div>
+      <br>
+      <div style="border: 2px solid #ccc; padding: 30px; padding-bottom: 0;">
         <div class="row">
           <div class="three columns">
             <input class="button" style="width: 100%;" type="submit" value="Up (Y+)" id="plusY">
@@ -34,18 +51,11 @@
             <input class="button" style="width: 100%;" type="submit" value="Left (X-)" id="minX">
           </div>
         </div>
+        <br>
       </div>
       <br>
       <div style="border: 2px solid #ccc; padding: 30px; padding-bottom: 0;">
         <form action="">
-          <div class="row">
-            <div class="eight columns">
-              Range (mm/step)
-            </div>
-            <div class="four columns">
-              <input class="u-full-width" type="number" id="range">
-            </div>
-          </div>
           <div class="row">
               <div class="eight columns">
                 X-Axis (Step)
