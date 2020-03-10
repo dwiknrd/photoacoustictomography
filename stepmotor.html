@@ -19,53 +19,60 @@
     </div>
     <!-- Row 2 Untuk status dann slot gambar -->
     <div class="row">
-      <!-- Kolom 1 Untuk Status -->
-      <div class="four columns">
-        <div style="border: 2px solid #ccc; padding: 30px; padding-bottom: 0;">
-          <form action="">
-            <div class="row">
-              <div class="eight columns">
-                Range (mm/step)
-              </div>
-              <div class="four columns">
-                <input class="u-full-width" type="number" id="range">
-              </div>
-            </div>
-            <div class="row">
-                <div class="eight columns">
-                  X-Axis (Step)
-                </div>
-                <div class="four columns">
-                  <input class="u-full-width" type="number" id="xaxis">
-                </div>
-            </div>
-            <div class="row">
-                <div class="eight columns">
-                    Y-Axis (Step)
-                </div>
-                <div class="four columns">
-                    <input class="u-full-width" type="number" id="yaxis">
-                </div>
-            </div>
-            <div class="row">
-              <br>
-              <input class="button-primary" style="width: 100%;" type="submit" value="Run" id="runbutton">
-              <br>
-              <input class="button" style="width: 100%;" type="submit" value="Abort" id="abortbutton">
-            </div>
-          </form>
+      <div style="border: 2px solid #ccc; padding: 30px; padding-bottom: 0;">
+        <div class="row">
+          <div class="three columns">
+            <input class="button" style="width: 100%;" type="submit" value="Up (Y+)" id="runbutton">
+          </div>
+          <div class="three columns">
+            <input class="button" style="width: 100%;" type="submit" value="Down (Y-)" id="runbutton">
+          </div>
+          <div class="three columns">
+            <input class="button" style="width: 100%;" type="submit" value="Right (X+)" id="runbutton">
+          </div>
+          <div class="three columns">
+            <input class="button" style="width: 100%;" type="submit" value="Left (X-)" id="runbutton">
+          </div>
         </div>
       </div>
-      <!-- Kolom 2 Untuk Gambar -->
-      <div class="eight columns">
-        <div class="statictabcontent">
-          <h3>Ini Progressnya</h3>
-          <p>Disini tempatnya progress setelah run</p>
-          <progress value="22" max="100"></progress>
-        </div>
+      <br>
+      <div style="border: 2px solid #ccc; padding: 30px; padding-bottom: 0;">
+        <form action="">
+          <div class="row">
+            <div class="eight columns">
+              Range (mm/step)
+            </div>
+            <div class="four columns">
+              <input class="u-full-width" type="number" id="range">
+            </div>
+          </div>
+          <div class="row">
+              <div class="eight columns">
+                X-Axis (Step)
+              </div>
+              <div class="four columns">
+                <input class="u-full-width" type="number" id="xaxis">
+              </div>
+          </div>
+          <div class="row">
+              <div class="eight columns">
+                  Y-Axis (Step)
+              </div>
+              <div class="four columns">
+                  <input class="u-full-width" type="number" id="yaxis">
+              </div>
+          </div>
+          <div class="row">
+            <br>
+            <input class="button-primary" style="width: 100%;" type="submit" value="Run" id="runbutton">
+            <br>
+            <input class="button" style="width: 100%;" type="submit" value="Abort" id="abortbutton">
+          </div>
+        </form>
       </div>
     </div>
   </div>
+  <br><br>
   <script src="stepmotor.js"></script>
 </body>
 </html>
