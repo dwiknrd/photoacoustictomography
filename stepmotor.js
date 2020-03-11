@@ -9,6 +9,7 @@ let plusY = document.getElementById('plusY')
 let minY = document.getElementById('minY')
 let plusX = document.getElementById('plusX')
 let minX = document.getElementById('minX')
+let delay = document.getElementById('delay')
 
 
 runbutton.addEventListener('click', (event) => {
@@ -16,7 +17,8 @@ runbutton.addEventListener('click', (event) => {
   
     let data = {
         xaxis : xaxis.value,
-        yaxis : yaxis.value
+        yaxis : yaxis.value,
+        delay : delay.value
     }
 
     ipcRenderer.send('stepmotor-run', data)
@@ -42,20 +44,20 @@ abortbutton.addEventListener('click', (event) => {
 
 plusY.addEventListener('click', (event) => {
     event.preventDefault() 
-    ipcRenderer.send('stepmotor-plusy')
+    ipcRenderer.send('stepmotor-up')
   })
 
 minY.addEventListener('click', (event) => {
     event.preventDefault() 
-    ipcRenderer.send('stepmotor-miny')
+    ipcRenderer.send('stepmotor-down')
   })
 
 plusX.addEventListener('click', (event) => {
     event.preventDefault() 
-    ipcRenderer.send('stepmotor-plusx')
+    ipcRenderer.send('stepmotor-right')
   })
 
 minX.addEventListener('click', (event) => {
     event.preventDefault() 
-    ipcRenderer.send('stepmotor-minx')
+    ipcRenderer.send('stepmotor-left')
   })

@@ -7,6 +7,13 @@ const port = new SerialPort('/dev/cu.usbmodem14101', {
     autoOpen: true
 })
 
+const portMotor = new SerialPort('/dev/ttyACM0', {
+    baudRate: 9600,
+    lock: false,
+    autoOpen: true
+})
+
+
 let mainWindow = null
 let laserWindow = null
 let detectorWindow = null
@@ -156,5 +163,100 @@ app.on('ready', function() {
             }
             console.log('laser modulasi sudah diupdate', laserData)
           })
+    })
+
+    ipcMain.on('stepmotor-up', function(event) {
+
+        let motorData = `u\n`
+
+        portMotor.write(motorData, function(err) {
+            if (err) {
+              return console.log('Error on moving motor up: ', err.message)
+            }
+            console.log('stepmotor moving up')
+          })
+    })
+
+    ipcMain.on('stepmotor-down', function(event) {
+
+        let motorData = `d\n`
+
+        portMotor.write(motorData, function(err) {
+            if (err) {
+              return console.log('Error on moving motor down: ', err.message)
+            }
+            console.log('stepmotor moving down')
+          })
+    })
+
+    ipcMain.on('stepmotor-left', function(event) {
+
+        let motorData = `l\n`
+
+        portMotor.write(motorData, function(err) {
+            if (err) {
+              return console.log('Error on moving motor left: ', err.message)
+            }
+            console.log('stepmotor moving left')
+          })
+    })
+
+    ipcMain.on('stepmotor-right', function(event) {
+
+        let motorData = `r\n`
+
+        portMotor.write(motorData, function(err) {
+            if (err) {
+              return console.log('Error on moving motor right: ', err.message)
+            }
+            console.log('stepmotor moving right')
+          })
+    })
+
+    ipcMain.on('stepmotor-savestep', function(event, data) {
+
+        let range = data/2 * 10
+        let motorData = `j${range}\n`
+
+        portMotor.write(motorData, function(err) {
+            if (err) {
+              return console.log('Error on moving motor right: ', err.message)
+            }
+            console.log('stepmotor step saved')
+          })
+    })
+
+    ipcMain.on('stepmotor-run', function(event, data) {
+        console.log(data)
+
+        let motorDelay = `n${data.delay}\n`
+        console.log(motorDelay)
+
+        portMotor.write(motorDelay, function(err) {
+            if (err) {
+              return console.log('Error while setting delay: ', err.message)
+            }
+            console.log('Delay berhasil di set')
+          })
+        
+        let motorCoordinates = `x${data.xaxis}y${data.yaxis}\n`
+        console.log(motorCoordinates)
+
+
+        portMotor.write(motorCoordinates, function(err) {
+            if (err) {
+                return console.log('Error on saving coordinates: ', err.message)
+            }
+            console.log('stepmotor moving coordinates saved')
+        })
+
+        let runStepMotor = `m\n`
+
+        portMotor.write(runStepMotor, function(err) {
+            if (err) {
+                return console.log('Error on moving motor: ', err.message)
+            }
+            console.log('stepmotor is moving')
+        })
     })
 })
