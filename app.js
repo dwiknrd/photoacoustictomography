@@ -258,5 +258,22 @@ app.on('ready', function() {
             }
             console.log('stepmotor is moving')
         })
+
+        portMotor.on('data', function(data) {
+            // console.log(data.toString('utf8'))
+            if (data.toString('utf8') == "p") {
+                console.log('capture nih')
+            }
+        })
+    })
+
+    ipcMain.on('stepmotor-abort', function(event, data) {
+
+        portMotor.write('s/n', function(err) {
+            if (err) {
+              return console.log('Error on stopping moving motor: ', err.message)
+            }
+            console.log('stepmotor stopped')
+          })
     })
 })

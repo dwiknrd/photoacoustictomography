@@ -20,39 +20,29 @@
     <!-- Row 2 Untuk status dann slot gambar -->
     <div class="row">
       <!-- Kolom 1 Untuk Status -->
-      <div class="four columns">
-        <div style="border: 2px solid #ccc; padding: 30px; padding-bottom: 0;">
-          <form action="">
-            <div class="row">
+      <div style="border: 2px solid #ccc; padding: 30px; padding-bottom: 0;">
+        <form action="">
+          <div class="row">
+            <div class="eight columns">
+              Frequency (Hertz)
+            </div>
+            <div class="four columns">
+              <input id="laserfreq" class="u-full-width" type="number" name="frequency">
+            </div>
+          </div>
+          <div class="row">
               <div class="eight columns">
-                Frequency (Hertz)
+                Duty Cycle (%)
               </div>
               <div class="four columns">
-                <input id="laserfreq" class="u-full-width" type="number" name="frequency">
+                <input id="laserduty" class="u-full-width" type="number" name="dutycycle">
               </div>
-            </div>
-            <div class="row">
-                <div class="eight columns">
-                  Duty Cycle (%)
-                </div>
-                <div class="four columns">
-                  <input id="laserduty" class="u-full-width" type="number" name="dutycycle">
-                </div>
-            </div>
-            <div class="row">
-              <br>
-              <input id="lasersubmit" class="button-primary" style="width: 100%;" type="submit" value="Input">
-            </div>
-          </form>
-        </div>
-      </div>
-      <!-- Kolom 2 Untuk Gambar -->
-      <div class="eight columns">
-        <div class="statictabcontent">
-          <h3>Ini Progressnya</h3>
-          <p>Disini tempatnya progress setelah run</p>
-          <progress value="22" max="100"></progress>
-        </div>
+          </div>
+          <div class="row">
+            <br>
+            <input id="lasersubmit" class="button-primary" style="width: 100%;" type="submit" value="Input">
+          </div>
+        </form>
       </div>
     </div>
   </div>

@@ -39,7 +39,7 @@ savestepbutton.addEventListener('click', (event) => {
 
 abortbutton.addEventListener('click', (event) => {
     event.preventDefault() 
-    ipcRenderer.send('abort-stepmotor')
+    ipcRenderer.send('stepmotor-abort')
   })
 
 plusY.addEventListener('click', (event) => {
