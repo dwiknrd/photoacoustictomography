@@ -1,10 +1,10 @@
 // defines pins numbers
 const int stepPin1 = 5; //CLK+
-const int dirPin1 = 2; //CW+
+const int dirPin1 = 3; //CW+
 const int enPin1 = 8;//en+
 
-const int stepPin2 = 13; //CLK+
-const int dirPin2 = 12; //CW+
+const int stepPin2 = 11; //CLK+
+const int dirPin2 = 10; //CW+
 const int enPin2 = 11;//en+
 
 String rangeString = "";         // a String to hold incoming data
@@ -49,9 +49,9 @@ void setup() {
 void loop() {
 
   if (stringComplete) {
-    Serial.println(rangeString);
-    Serial.println(xString);
-    Serial.println(yString);
+//    Serial.println(rangeString);
+//    Serial.println(xString);
+//    Serial.println(yString);
     // clear the string:
     range = rangeString.toInt();
     totalDelay = delayString.toInt();
@@ -66,12 +66,14 @@ void loop() {
   if(runMode) {
     bool right = true;
     for (int i = 0; i < totalY; i++) {
+      serialEvent();
       if (abortMotor)
       {
         break;
       }
       
       for (int j = 0; j < totalX; j++) {
+        serialEvent();
         if (abortMotor)
         {
           break;
@@ -80,16 +82,19 @@ void loop() {
         if (right) {
           rightMotor();
           delay(totalDelay);
+          Serial.print('p');
         }
         else
         {
           leftMotor();
           delay(totalDelay);
+          Serial.print('p');
         }
       }
       right = !right ;
       downMotor();
       delay(totalDelay);
+      Serial.print('p');
     }
     runMode = false;
     abortMotor = false;
