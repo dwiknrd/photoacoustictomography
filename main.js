@@ -67,7 +67,7 @@ let templateMenu = [
                 ]
             },
             {
-                label: 'Photoaccoustic Tomography',
+                label: 'Photoacoustic Tomography',
                 click: function () {
                     ipcRenderer.send('tog-patWindow')
                 }
