@@ -21,77 +21,97 @@
     <!-- Row 2 Untuk status dann slot gambar -->
     <div class="row">
       <!-- Kolom 1 Untuk Status -->
-      <div class="four columns">
-        <div style="border: 2px solid #ccc; padding: 30px; padding-bottom: 0;">
-          <h3 style="background-color: white; padding-bottom: 10px;">Status</h3>
-          <form action="">
-            <div class="row">
-              <div class="eight columns">
-                Duty Cycle (%)
-              </div>
-              <div class="four columns">
-                <input class="u-full-width" type="number" name="dutycycle">
-              </div>
+      <div style="border: 2px solid #ccc; padding: 30px; padding-bottom: 0;">
+        <form action="">
+          <div class="row">
+            <div class="eight columns">
+              Duty Cycle (%)
             </div>
-            <div class="row">
-              <div class="eight columns">
-                Frequency (Hertz)
-              </div>
-              <div class="four columns">
-                <input class="u-full-width" type="number" name="frequency">
-              </div>
+            <div class="four columns">
+              <input class="u-full-width" type="number" name="dutycycle">
             </div>
-            <div class="row">
-              <div class="eight columns">
-                Range (mm/step)
-              </div>
-              <div class="four columns">
-                <input class="u-full-width" type="number" name="range">
-              </div>
+          </div>
+          <div class="row">
+            <div class="eight columns">
+              Frequency (Hertz)
             </div>
-            <div class="row">
-              <div class="eight columns">
-                X-Axis (step)
-              </div>
-              <div class="four columns">
-                <input class="u-full-width" type="number" name="xaxis">
-              </div>
+            <div class="four columns">
+              <input class="u-full-width" type="number" name="frequency">
             </div>
-            <div class="row">
-              <div class="eight columns">
-                Y-Axis (step)
-              </div>
-              <div class="four columns">
-                <input class="u-full-width" type="number" name="yaxis">
-              </div>
+          </div>
+          <div class="row">
+            <div class="eight columns">
+              Range (mm/step)
             </div>
-            <div class="row">
-              <br>
-              <input class="button-primary" style="width: 100%;" type="submit" value="Start">
+            <div class="four columns">
+              <input class="u-full-width" type="number" name="range">
             </div>
-          </form>
-        </div>
+          </div>
+          <div class="row">
+            <div class="eight columns">
+              X-Axis (step)
+            </div>
+            <div class="four columns">
+              <input class="u-full-width" type="number" name="xaxis">
+            </div>
+          </div>
+          <div class="row">
+            <div class="eight columns">
+              Y-Axis (step)
+            </div>
+            <div class="four columns">
+              <input class="u-full-width" type="number" name="yaxis">
+            </div>
+          </div>
+          <div class="row">
+            <br>
+            <input class="button-primary" style="width: 100%;" type="submit" value="Start">
+          </div>
+        </form>
       </div>
       <!-- Kolom 2 Untuk Gambar -->
       <div class="eight columns">
-        <div class="tab">
-          <button class="tablinks" id="defaultOpen" onclick="openCity(event, '2d')">2 Dimension</button>
-          <button class="tablinks" onclick="openCity(event, '3d')">3 Dimension</button>
 
-        </div>
-        <div id="2d" class="tabcontent">
-          <h3>Ini 2 Dimensi</h3>
-          <p>Disini tempatnya gambar 2 dimensi.</p>
-        </div>
-        
-        <div id="3d" class="tabcontent">
-          <h3>Ini 3 Dimensi</h3>
-          <p>Disini tempatnya gambar 3 dimensi.</p>
-        </div>
-        
       </div>
     </div>
+    <br><br>
+    <div class="row">
+      <div class="tab">
+        <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'normal')">Normal</button>
+        <button class="tablinks" onclick="openCity(event, 'nearest')">Nearest</button>
+        <button class="tablinks" onclick="openCity(event, 'bilinier')">Bilinier</button>
+        <button class="tablinks" onclick="openCity(event, 'cubic')">Cubic</button>
+        <button class="tablinks" onclick="openCity(event, 'bicubic')">Bicubic</button>
+      </div>
+      
+      <div id="normal" class="tabcontent">
+        <h3>Normal</h3>
+        <p>Disini tempatnya gambar Normal.</p>
+      </div>
+      
+      <div id="nearest" class="tabcontent">
+        <h3>Nearest</h3>
+        <p>Disini tempatnya gambar Nearest.</p>
+      </div>
+
+      <div id="bilinier" class="tabcontent">
+        <h3>Bilinier</h3>
+        <p>Disini tempatnya gambar Bilinier.</p>
+      </div>
+
+      <div id="cubic" class="tabcontent">
+        <h3>Cubic</h3>
+        <p>Disini tempatnya gambar Cubic.</p>
+      </div>
+
+      <div id="bicubic" class="tabcontent">
+        <h3>Bicubic</h3>
+        <p>Disini tempatnya gambar Bicubic.</p>
+      </div>
+
+    </div>
   </div>
+  <br><br><br>
   <script>document.getElementById("defaultOpen").click();</script>
 </body>
 </html>
