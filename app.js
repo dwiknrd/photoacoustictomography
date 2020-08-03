@@ -22,6 +22,7 @@ let patWindow = null
 
 function mainWindowFunc () {
     mainWindow = new BrowserWindow({
+        icon: __dirname + '/images/logo.png',
         width : 1280,
         height : 720,
         webPreferences: {
