@@ -1,13 +1,13 @@
 const {app, BrowserWindow, ipcMain} = require('electron')
 
 const SerialPort = require('serialport')
-const port = new SerialPort('/dev/cu.usbmodem14101', {
+const port = new SerialPort('/dev/ttyACM0', {
     baudRate: 9600,
     lock: false,
     autoOpen: true
 })
 
-const portMotor = new SerialPort('/dev/ttyACM0', {
+const portMotor = new SerialPort('/dev/ttyACM1', {
     baudRate: 9600,
     lock: false,
     autoOpen: true
