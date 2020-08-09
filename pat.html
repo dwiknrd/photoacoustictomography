@@ -29,7 +29,7 @@
               Frequency (Hertz)
             </div>
             <div class="four columns">
-              <input class="u-full-width" type="number" name="frequency">
+              <input id="laserfreq" class="u-full-width" type="number" name="frequency">
             </div>
           </div>
           <div class="row">
@@ -37,7 +37,7 @@
               Duty Cycle (%)
             </div>
             <div class="four columns">
-              <input class="u-full-width" type="number" name="dutycycle">
+              <input id="laserduty" class="u-full-width" type="number" name="dutycycle">
             </div>
           </div>
           <div class="row">
@@ -45,7 +45,7 @@
               Range (mm/step)
             </div>
             <div class="four columns">
-              <input class="u-full-width" type="number" name="range">
+              <input id="range" class="u-full-width" type="number" name="range">
             </div>
           </div>
           <div class="row">
@@ -53,7 +53,7 @@
               X-Axis (step)
             </div>
             <div class="four columns">
-              <input class="u-full-width" type="number" name="xaxis">
+              <input id="xaxis" class="u-full-width" type="number" name="xaxis">
             </div>
           </div>
           <div class="row">
@@ -61,7 +61,7 @@
               Y-Axis (step)
             </div>
             <div class="four columns">
-              <input class="u-full-width" type="number" name="yaxis">
+              <input id="yaxis" class="u-full-width" type="number" name="yaxis">
             </div>
           </div>
           <div class="row">
@@ -69,16 +69,16 @@
               Time Delay (ms)
             </div>
             <div class="four columns">
-              <input class="u-full-width" type="number" name="delay">
+              <input id="delay" class="u-full-width" type="number" name="delay">
             </div>
           </div>
           <div class="row">
             <br>
-            <input class="button-primary" style="width: 100%;" type="submit" value="Start">
+            <input id="patsubmit" class="button-primary" style="width: 100%;" type="submit" value="Start">
           </div>
           <div class="row">
             <br>
-            <input class="button-primary" style="width: 100%; background-color:red;" type="submit" value="Abort">
+            <input id="abortbutton" class="button-primary" style="width: 100%; background-color:red;" type="submit" value="Abort">
           </div>
         </form>
       </div>
@@ -126,5 +126,6 @@
   </div>
   <br><br><br>
   <script>document.getElementById("defaultOpen").click();</script>
+  <script src="pat.js"></script>
 </body>
 </html>

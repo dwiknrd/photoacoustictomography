@@ -21,7 +21,7 @@ runbutton.addEventListener('click', (event) => {
         delay : delay.value
     }
 
-    ipcRenderer.send('stepmotor-run', data)
+    ipcRenderer.send('stepmotor-run-calibrate', data)
 
   })
 

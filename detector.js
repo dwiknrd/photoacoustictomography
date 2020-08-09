@@ -3,6 +3,7 @@ let fft;
 let filter, filterFreq, filterWidth;
 let width1 = 0
 filterFreq = 10000
+let maxInt = 0
 
 //Create array for x axes on plotly
 let arrayFreq = []
@@ -113,9 +114,8 @@ function draw() {
     rect(x, height, width / spectrum.length, h);
   }
   console.log(`Intensitas Maximum: ${Math.max(...spectrum)} dB`)
-  console.log(`Intensitas Pada Frekuensi ${filterFreq}: ${fft.getEnergy(filterFreq)}`);
-  
-  
+  maxInt = fft.getEnergy(filterFreq)
+  console.log(`Intensitas Pada Frekuensi ${filterFreq}: ${fft.getEnergy(filterFreq)} - ${maxInt}`);
 }
 
 lasersubmit.addEventListener('click', (event) => {
@@ -137,4 +137,8 @@ lasersubmit.addEventListener('click', (event) => {
 
   document.getElementById("displayintensity").innerHTML = `Max Intencity: ${Math.max(...fft.analyze())} dB`;
   document.getElementById("displayfrequency").innerHTML = `Max Frequency: ${Math.round(fft.analyze().indexOf(Math.max(...fft.analyze()))*21.5234375 / 1000) * 1000} Hertz`;
+})
+
+ipcRenderer.on('getInt', (event, message) => {
+  ipcRenderer.send('push-arrPat', maxInt)
 })
