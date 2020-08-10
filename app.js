@@ -105,6 +105,7 @@ function patWindowFunc () {
     })
 
     patWindow.webContents.loadURL(`file://${__dirname}/pat.html`)
+    patWindow.webContents.openDevTools()
 
     patWindow.on('close', function(evt) {
         evt.preventDefault();
@@ -300,7 +301,7 @@ app.on('ready', function() {
         portMotor.on('data', function(data) {
             // console.log(data.toString('utf8'))
             if (data.toString('utf8') == "p") {
-                console.log('capture nih')
+                // console.log('capture nih')
                 detectorWindow.webContents.send('getInt', 'get intencity')
             }
 
@@ -323,6 +324,7 @@ app.on('ready', function() {
               return console.log('Error on stopping moving motor: ', err.message)
             }
             arrPat = []
+            console.log('ini arrpat', arrPat)
             console.log('stepmotor stopped')
           })
     })

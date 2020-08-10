@@ -98,7 +98,7 @@ void loop() {
     }
     runMode = false;
     abortMotor = false;
-    Serial.print('z')
+    Serial.print('z');
   }
   
 }
