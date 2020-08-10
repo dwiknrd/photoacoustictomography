@@ -10,19 +10,15 @@ const int enPin2 = 11;//en+
 String rangeString = "";         // a String to hold incoming data
 String xString = "";
 String yString = "";
-String delayString = "";
 bool toRange = false;
 bool toX = false;
 bool toY = false;
-bool runMode = false;
-bool toDelay = false;
 bool stringComplete = false;  // whether the string is complete
 bool abortMotor = false;
 
 int range = 0;
 int totalX = 0;
 int totalY = 0;
-int totalDelay = 1000;
 
 void setup() {
   //Serial Begin
@@ -32,7 +28,6 @@ void setup() {
   rangeString.reserve(200);
   xString.reserve(200);
   yString.reserve(200);
-  delayString.reserve(200);
   
   // Sets the two pins as Outputs
   pinMode(stepPin1,OUTPUT); 
@@ -54,51 +49,12 @@ void loop() {
 //    Serial.println(yString);
     // clear the string:
     range = rangeString.toInt();
-    totalDelay = delayString.toInt();
     totalX = xString.toInt();
     totalY = yString.toInt();
     xString = "";
     yString = "";
 
     stringComplete = false;
-  }
-
-  if(runMode) {
-    bool right = true;
-    for (int i = 0; i < totalY; i++) {
-      serialEvent();
-      if (abortMotor)
-      {
-        break;
-      }
-      
-      for (int j = 0; j < totalX; j++) {
-        serialEvent();
-        if (abortMotor)
-        {
-          break;
-        }
-
-        if (right) {
-          rightMotor();
-          delay(totalDelay);
-          Serial.print('p');
-        }
-        else
-        {
-          leftMotor();
-          delay(totalDelay);
-          Serial.print('p');
-        }
-      }
-      right = !right ;
-      downMotor();
-      delay(totalDelay);
-      Serial.print('p');
-    }
-    runMode = false;
-    abortMotor = false;
-    Serial.print('z');
   }
   
 }
@@ -171,18 +127,6 @@ void serialEvent() {
         toDelay = false;
     }
 
-    else if (inChar == 'n') {
-        delayString = "";
-        toY = false;
-        toRange = false;
-        toX = false;
-        toDelay = true;
-    }
-
-    else if (inChar == 'm') {
-        runMode = true;
-    }
-
     else if (inChar == 'u') {
         upMotor();
     }
@@ -213,10 +157,6 @@ void serialEvent() {
 
     else if (toY){
         yString += inChar;
-    }
-
-    else if (toDelay) {
-        delayString += inChar;
     }
 
     // if the incoming character is a newline, set a flag so the main loop can

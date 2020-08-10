@@ -11,6 +11,46 @@ let plusX = document.getElementById('plusX')
 let minX = document.getElementById('minX')
 let delay = document.getElementById('delay')
 
+let abortMotor = false
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function runMotor(data) {
+
+  let toRight = true
+
+    for (let i = 0; i < data.yaxis; i++) {
+      if(abortMotor) {
+        break
+      }
+
+      for (j = 0; j < data.xaxis-1; j++) {
+        if(abortMotor) {
+          break
+        }
+
+        if(i == 0 && j == 0) {
+          await sleep(data.delay)
+          console.log(capture)
+        }
+        
+        if(toRight) {
+          ipcRenderer.send('stepmotor-right')
+          await sleep(data.delay)
+        }
+        else{
+          ipcRenderer.send('stepmotor-left')
+          await sleep(data.delay)
+        }
+      }
+      toRight = !toRight
+      ipcRenderer.send('stepmotor-down')
+      await sleep(data.delay)
+    }
+    abortMotor = false;
+}
 
 runbutton.addEventListener('click', (event) => {
     event.preventDefault() 
@@ -21,8 +61,8 @@ runbutton.addEventListener('click', (event) => {
         delay : delay.value
     }
 
-    ipcRenderer.send('stepmotor-run-calibrate', data)
-
+    // ipcRenderer.send('stepmotor-run-calibrate', data)
+    runMotor(data);
   })
 
 savestepbutton.addEventListener('click', (event) => {
@@ -39,7 +79,7 @@ savestepbutton.addEventListener('click', (event) => {
 
 abortbutton.addEventListener('click', (event) => {
     event.preventDefault() 
-    ipcRenderer.send('stepmotor-abort')
+    abortMotor = true
   })
 
 plusY.addEventListener('click', (event) => {

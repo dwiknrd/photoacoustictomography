@@ -230,41 +230,6 @@ app.on('ready', function() {
           })
     })
 
-    ipcMain.on('stepmotor-run-calibrate', function(event, data) {
-        console.log(data)
-
-        let motorDelay = `n${data.delay}\n`
-        console.log(motorDelay)
-
-        portMotor.write(motorDelay, function(err) {
-            if (err) {
-              return console.log('Error while setting delay: ', err.message)
-            }
-            console.log('Delay berhasil di set')
-          })
-        
-        let motorCoordinates = `x${data.xaxis}y${data.yaxis}\n`
-        console.log(motorCoordinates)
-
-
-        portMotor.write(motorCoordinates, function(err) {
-            if (err) {
-                return console.log('Error on saving coordinates: ', err.message)
-            }
-            console.log('stepmotor moving coordinates saved')
-        })
-
-        let runStepMotor = `m\n`
-
-        portMotor.write(runStepMotor, function(err) {
-            if (err) {
-                return console.log('Error on moving motor: ', err.message)
-            }
-            console.log('stepmotor is moving')
-        })
-
-    })
-
     ipcMain.on('stepmotor-run', function(event, data) {
         console.log(data)
 
