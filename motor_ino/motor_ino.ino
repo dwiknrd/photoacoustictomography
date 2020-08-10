@@ -109,14 +109,12 @@ void serialEvent() {
         rangeString = "";
         toRange = true;
         toX = false;
-        toDelay = false;
         toY = false;
     }
 
     else if (inChar == 'x') {
         toX = true;
         toRange = false;
-        toDelay = false;
         toY = false;
     }
 
@@ -124,7 +122,6 @@ void serialEvent() {
         toY = true;
         toRange = false;
         toX = false;
-        toDelay = false;
     }
 
     else if (inChar == 'u') {
