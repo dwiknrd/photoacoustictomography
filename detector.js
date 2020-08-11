@@ -139,6 +139,8 @@ lasersubmit.addEventListener('click', (event) => {
   document.getElementById("displayfrequency").innerHTML = `Max Frequency: ${Math.round(fft.analyze().indexOf(Math.max(...fft.analyze()))*21.5234375 / 1000) * 1000} Hertz`;
 })
 
-ipcRenderer.on('getInt', (event, message) => {
-  ipcRenderer.send('push-arrPat', maxInt)
-})
+const intencity = () => {
+  return maxInt
+};
+
+exports.intencity = intencity

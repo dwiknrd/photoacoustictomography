@@ -1,5 +1,7 @@
 const ipcRenderer = require('electron').ipcRenderer
 
+const detector = require('./detector.js')
+
 let laserfreq = document.getElementById('laserfreq')
 let laserduty = document.getElementById('laserduty')
 
@@ -11,6 +13,8 @@ let delay = document.getElementById('delay')
 let abortbutton = document.getElementById('abortbutton')
 
 let patsubmit = document.getElementById('patsubmit')
+
+let abortMotor = false
 
 patsubmit.addEventListener('click', (event) => {
     event.preventDefault()
@@ -38,14 +42,58 @@ patsubmit.addEventListener('click', (event) => {
     else {
         ipcRenderer.send('submit-laser', data)
         ipcRenderer.send('stepmotor-savestep', range.value)
-        ipcRenderer.send('stepmotor-run', motorData)
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+          }
+          
+          async function runMotor(data) {
+          
+            let toRight = true
+          
+              for (let i = 0; i < data.yaxis; i++) {
+                if(abortMotor) {
+                  break
+                }
+          
+                for (j = 0; j < data.xaxis-1; j++) {
+                  if(abortMotor) {
+                    break
+                  }
+          
+                  if(i == 0 && j == 0) {
+                    await sleep(data.delay)
+                    console.log('intencity', detector.intencity)
+                  }
+                  
+                  if(toRight) {
+                    ipcRenderer.send('stepmotor-right')
+                    await sleep(data.delay)
+                    console.log('intencity', detector.intencity)
+                  }
+                  else{
+                    ipcRenderer.send('stepmotor-left')
+                    await sleep(data.delay)
+                    console.log('intencity', detector.intencity)
+                  }
+                }
+                toRight = !toRight
+                ipcRenderer.send('stepmotor-down')
+                await sleep(data.delay)
+                console.log('intencity', detector.intencity)
+              }
+              abortMotor = false;
+          }
+      
+          runMotor(data);
     }
 
   })
 
 abortbutton.addEventListener('click', (event) => {
     event.preventDefault() 
-    ipcRenderer.send('stepmotor-abort')
+    console.log('abort button kepencet') 
+    abortMotor = true
   })
 
 ipcRenderer.on('arrPat-done', (event, data) => {
