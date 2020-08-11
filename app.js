@@ -20,8 +20,6 @@ let detectorWindow = null
 let stepMotorWindow = null
 let patWindow = null
 
-let arrPat = []
-
 function mainWindowFunc () {
     mainWindow = new BrowserWindow({
         icon: __dirname + '/images/logo.png',
@@ -227,70 +225,6 @@ app.on('ready', function() {
               return console.log('Error on moving motor right: ', err.message)
             }
             console.log('stepmotor step saved')
-          })
-    })
-
-    ipcMain.on('stepmotor-run', function(event, data) {
-        console.log(data)
-
-        let motorDelay = `n${data.delay}\n`
-        console.log(motorDelay)
-
-        portMotor.write(motorDelay, function(err) {
-            if (err) {
-              return console.log('Error while setting delay: ', err.message)
-            }
-            console.log('Delay berhasil di set')
-          })
-        
-        let motorCoordinates = `x${data.xaxis}y${data.yaxis}\n`
-        console.log(motorCoordinates)
-
-
-        portMotor.write(motorCoordinates, function(err) {
-            if (err) {
-                return console.log('Error on saving coordinates: ', err.message)
-            }
-            console.log('stepmotor moving coordinates saved')
-        })
-
-        let runStepMotor = `m\n`
-
-        portMotor.write(runStepMotor, function(err) {
-            if (err) {
-                return console.log('Error on moving motor: ', err.message)
-            }
-            console.log('stepmotor is moving')
-        })
-
-        portMotor.on('data', function(data) {
-            // console.log(data.toString('utf8'))
-            if (data.toString('utf8') == "p") {
-                // console.log('capture nih')
-                detectorWindow.webContents.send('getInt', 'get intencity')
-            }
-
-            if (data.toString('utf8') == "z") {
-                console.log('CAPTURE DONE')
-                patWindow.webContents.send('arrPat-done', arrPat)
-            }
-        })
-    })
-
-    ipcMain.on('push-arrPat', function(event, data) {
-        arrPat.push(data)
-        console.log(arrPat)
-    })
-
-    ipcMain.on('stepmotor-abort', function(event, data) {
-
-        portMotor.write('s/n', function(err) {
-            if (err) {
-              return console.log('Error on stopping moving motor: ', err.message)
-            }
-            arrPat = []
-            console.log('ini arrpat', arrPat)
-            console.log('stepmotor stopped')
           })
     })
 })

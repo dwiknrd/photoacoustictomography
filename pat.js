@@ -14,6 +14,47 @@ let patsubmit = document.getElementById('patsubmit')
 
 let abortMotor = false
 
+let maxInt = 0
+let filterFreq = 10000
+
+let arrPat = []
+
+function setup() {
+  
+    filter = new p5.BandPass();
+  
+    noise = new p5.AudioIn();
+  
+    noise.disconnect(); // Disconnect soundfile from master output...
+    filter.process(noise); // ...and connect to filter so we'll only hear BandPass.
+    noise.start();
+  
+    fft = new p5.FFT();
+  }
+  
+  
+  function startMic() {
+    if (getAudioContext().state !== 'running') {
+      getAudioContext().resume();
+    }
+  }
+  
+  function draw() {
+  
+    startMic()
+  
+    filter.set(filterFreq, 5);
+    let spectrum = fft.analyze();
+    noStroke();
+    for (let i = 0; i < spectrum.length; i++) {
+      let x = map(i, 0, spectrum.length, 0, width);
+      let h = -height + map(spectrum[i], 0, 255, height, 0);
+      rect(x, height, width / spectrum.length, h);
+    }
+
+    maxInt = fft.getEnergy(filterFreq-500, filterFreq+500)
+  }
+
 patsubmit.addEventListener('click', (event) => {
     event.preventDefault()
 
@@ -38,6 +79,8 @@ patsubmit.addEventListener('click', (event) => {
         alert('Dutycycle harus diisi')
     }
     else {
+        arrPat = []
+        filterFreq = Number(data.laserfreq)
         ipcRenderer.send('submit-laser', data)
         ipcRenderer.send('stepmotor-savestep', range.value)
 
@@ -45,55 +88,56 @@ patsubmit.addEventListener('click', (event) => {
             return new Promise(resolve => setTimeout(resolve, ms));
           }
           
-          async function runMotor(data) {
+          async function runMotor(motorData) {
           
             let toRight = true
           
-              for (let i = 0; i < data.yaxis; i++) {
+              for (let i = 0; i < motorData.yaxis; i++) {
                 if(abortMotor) {
                   break
                 }
           
-                for (j = 0; j < data.xaxis-1; j++) {
+                for (j = 0; j < motorData.xaxis-1; j++) {
                   if(abortMotor) {
                     break
                   }
           
                   if(i == 0 && j == 0) {
-                    await sleep(data.delay)
-                    console.log('intencity')
+                    await sleep(motorData.delay)
+                    arrPat.push(maxInt)
+                    console.log('intencity', maxInt)
                   }
                   
                   if(toRight) {
                     ipcRenderer.send('stepmotor-right')
-                    await sleep(data.delay)
-                    console.log('intencity')
+                    await sleep(motorData.delay)
+                    arrPat.push(maxInt)
+                    console.log('intencity', maxInt)
                   }
                   else{
                     ipcRenderer.send('stepmotor-left')
-                    await sleep(data.delay)
-                    console.log('intencity')
+                    await sleep(motorData.delay)
+                    arrPat.push(maxInt)
+                    console.log('intencity', maxInt)
                   }
                 }
                 toRight = !toRight
                 ipcRenderer.send('stepmotor-down')
-                await sleep(data.delay)
-                console.log('intencity')
+                await sleep(motorData.delay)
+                arrPat.push(maxInt)
+                console.log('intencity', maxInt)
               }
               abortMotor = false;
+              console.log("Capturing Done", arrPat)
           }
       
-          runMotor(data);
+          runMotor(motorData);
     }
 
   })
 
 abortbutton.addEventListener('click', (event) => {
     event.preventDefault() 
-    console.log('abort button kepencet') 
+    console.log('abort button kepencet')
     abortMotor = true
-  })
-
-ipcRenderer.on('arrPat-done', (event, data) => {
-    console.log('ini adalah arrPat',data);
   })

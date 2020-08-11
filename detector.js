@@ -114,7 +114,7 @@ function draw() {
     rect(x, height, width / spectrum.length, h);
   }
   console.log(`Intensitas Maximum: ${Math.max(...spectrum)} dB`)
-  maxInt = fft.getEnergy(filterFreq)
+  maxInt = fft.getEnergy(filterFreq-500, filterFreq + 500)
   console.log(`Intensitas Pada Frekuensi ${filterFreq}: ${fft.getEnergy(filterFreq)} - ${maxInt}`);
 }
 
