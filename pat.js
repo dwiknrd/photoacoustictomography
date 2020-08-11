@@ -1,7 +1,5 @@
 const ipcRenderer = require('electron').ipcRenderer
 
-const detector = require('./detector.js')
-
 let laserfreq = document.getElementById('laserfreq')
 let laserduty = document.getElementById('laserduty')
 
@@ -63,24 +61,24 @@ patsubmit.addEventListener('click', (event) => {
           
                   if(i == 0 && j == 0) {
                     await sleep(data.delay)
-                    console.log('intencity', detector.intencity)
+                    console.log('intencity')
                   }
                   
                   if(toRight) {
                     ipcRenderer.send('stepmotor-right')
                     await sleep(data.delay)
-                    console.log('intencity', detector.intencity)
+                    console.log('intencity')
                   }
                   else{
                     ipcRenderer.send('stepmotor-left')
                     await sleep(data.delay)
-                    console.log('intencity', detector.intencity)
+                    console.log('intencity')
                   }
                 }
                 toRight = !toRight
                 ipcRenderer.send('stepmotor-down')
                 await sleep(data.delay)
-                console.log('intencity', detector.intencity)
+                console.log('intencity')
               }
               abortMotor = false;
           }

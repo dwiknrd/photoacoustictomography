@@ -138,9 +138,3 @@ lasersubmit.addEventListener('click', (event) => {
   document.getElementById("displayintensity").innerHTML = `Max Intencity: ${Math.max(...fft.analyze())} dB`;
   document.getElementById("displayfrequency").innerHTML = `Max Frequency: ${Math.round(fft.analyze().indexOf(Math.max(...fft.analyze()))*21.5234375 / 1000) * 1000} Hertz`;
 })
-
-const intencity = () => {
-  return maxInt
-};
-
-exports.intencity = intencity
