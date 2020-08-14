@@ -1,4 +1,6 @@
 const ipcRenderer = require('electron').ipcRenderer
+const {dialog} = require('electron').remote
+const fs = require('fs')
 
 let laserfreq = document.getElementById('laserfreq')
 let laserduty = document.getElementById('laserduty')
@@ -18,6 +20,42 @@ let maxInt = 0
 let filterFreq = 10000
 
 let arrPat = []
+
+function assignArray(x, y, array) {
+  array.pop()
+  let result = []
+  let arrayTemp = []
+  let counter = 0
+  let reverse = false
+
+  for (i = 0; i < array.length; i++) {
+      counter++
+      arrayTemp.push(array[i])
+      if (counter == x) {
+          counter = 0
+          if(reverse) {
+              result.push(arrayTemp.reverse())
+              reverse = false
+          }
+          else {
+              result.push(arrayTemp)
+              reverse = true
+          }
+          arrayTemp = []
+      }
+  }
+  console.log('assign array jalan', array)
+  return result.reverse()
+}
+
+function convertCSV(array) {
+  let result = []
+  array.forEach(element => {
+    result.push(element.join(","))
+  });
+
+  return result.join('\n')
+}
 
 function setup() {
   
@@ -86,52 +124,81 @@ patsubmit.addEventListener('click', (event) => {
 
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
-          }
-          
-          async function runMotor(motorData) {
-          
-            let toRight = true
-          
-              for (let i = 0; i < motorData.yaxis; i++) {
+        }
+        
+        function saveDialog() {
+          return new Promise((resolve, reject) => {
+            dialog.showSaveDialog((filename) => {
+              if(filename == undefined) {
+                reject("no name")
+              }
+              else {
+                resolve(filename)
+              }
+            })
+          })
+        }
+        
+        async function runMotor(motorData) {
+        
+          let toRight = true
+        
+            for (let i = 0; i < motorData.yaxis; i++) {
+              if(abortMotor) {
+                break
+              }
+        
+              for (j = 0; j < motorData.xaxis-1; j++) {
                 if(abortMotor) {
                   break
                 }
-          
-                for (j = 0; j < motorData.xaxis-1; j++) {
-                  if(abortMotor) {
-                    break
-                  }
-          
-                  if(i == 0 && j == 0) {
-                    await sleep(motorData.delay)
-                    arrPat.push(maxInt)
-                    console.log('intencity', maxInt)
-                  }
-                  
-                  if(toRight) {
-                    ipcRenderer.send('stepmotor-right')
-                    await sleep(motorData.delay)
-                    arrPat.push(maxInt)
-                    console.log('intencity', maxInt)
-                  }
-                  else{
-                    ipcRenderer.send('stepmotor-left')
-                    await sleep(motorData.delay)
-                    arrPat.push(maxInt)
-                    console.log('intencity', maxInt)
-                  }
+        
+                if(i == 0 && j == 0) {
+                  await sleep(motorData.delay)
+                  arrPat.push(maxInt)
+                  console.log('intencity', maxInt)
                 }
-                toRight = !toRight
-                ipcRenderer.send('stepmotor-down')
-                await sleep(motorData.delay)
-                arrPat.push(maxInt)
-                console.log('intencity', maxInt)
+                
+                if(toRight) {
+                  ipcRenderer.send('stepmotor-right')
+                  await sleep(motorData.delay)
+                  arrPat.push(maxInt)
+                  console.log('intencity', maxInt)
+                }
+                else{
+                  ipcRenderer.send('stepmotor-left')
+                  await sleep(motorData.delay)
+                  arrPat.push(maxInt)
+                  console.log('intencity', maxInt)
+                }
               }
-              abortMotor = false;
-              console.log("Capturing Done", arrPat)
-          }
-      
-          runMotor(motorData);
+              toRight = !toRight
+              ipcRenderer.send('stepmotor-down')
+              await sleep(motorData.delay)
+              arrPat.push(maxInt)
+              console.log('intencity', maxInt)
+            }
+            if(abortMotor) {
+              console.log("Capturing Done", assignArray(motorData.xaxis, motorData.yaxis, arrPat))
+            }
+            else{
+              const options = {
+                filters: [
+                  { name: 'CSV', extensions: ['csv'] },
+                  { name: 'All Files', extensions: ['*'] }
+                ]
+              }
+              const path = dialog.showSaveDialogSync(options)
+              console.log("SAVE DIALOG", path)
+              let arrayData =  assignArray(motorData.xaxis, motorData.yaxis, arrPat)
+              let csvData = convertCSV(arrayData)
+              fs.writeFileSync(path, csvData, 'utf8')
+              console.log("Capturing Done", "CSV sukses")
+            }
+            abortMotor = false;
+        }
+    
+        runMotor(motorData);
     }
 
   })
