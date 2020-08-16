@@ -57,6 +57,31 @@ function convertCSV(array) {
   return result.join('\n')
 }
 
+function plotNormal(array) {
+  var data = [ {
+    z: array,
+    type: 'heatmap',
+    colorbar:{
+      ticks: 'outside',
+      dtick: 1,
+      tickwidth: 2,
+      ticklen: 10,
+      tickcolor: 'grey',
+      showticklabels: true,
+      tickfont: {
+        size: 15
+      },
+      xpad: 50
+    }
+  }];
+  
+  var layout = {
+    title: 'Normal'
+  };
+  
+  Plotly.newPlot('plotnormal', data, layout);
+}
+
 function setup() {
   
     filter = new p5.BandPass();
@@ -194,6 +219,7 @@ patsubmit.addEventListener('click', (event) => {
               let csvData = convertCSV(arrayData)
               fs.writeFileSync(path, csvData, 'utf8')
               console.log("Capturing Done", "CSV sukses")
+              plotNormal(arrayData)
             }
             abortMotor = false;
         }
