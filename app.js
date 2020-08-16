@@ -118,6 +118,10 @@ app.on('ready', function() {
     detectorWindowFunc()
     stepMotorWindowFunc()
     patWindowFunc()
+
+    ipcMain.on('quit-app', function() {
+        app.quit()
+    })
     
     ipcMain.on('tog-laserWindow', function() {
         if(laserWindow.isVisible()) {

@@ -12,7 +12,10 @@ let templateMenu = [
                 label: 'Export'
             },
             {
-                label: 'Exit'
+                label: 'Exit',
+                click: function () {
+                    ipcRenderer.send('quit-app')
+                }
             }
         ]
     },
