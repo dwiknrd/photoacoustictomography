@@ -109,16 +109,16 @@ function plotHeatmap(array, title, div) {
 
 function setup() {
   
-    // filter = new p5.BandPass();
+    filter = new p5.BandPass();
   
     noise = new p5.AudioIn();
   
-    // noise.disconnect(); // Disconnect soundfile from master output...
-    // filter.process(noise); // ...and connect to filter so we'll only hear BandPass.
+    noise.disconnect(); // Disconnect soundfile from master output...
+    filter.process(noise); // ...and connect to filter so we'll only hear BandPass.
     noise.start();
   
     fft = new p5.FFT();
-    fft.setInput(noise);
+    // fft.setInput(noise);
   }
   
   
@@ -132,7 +132,7 @@ function setup() {
   
     startMic()
   
-    // filter.set(filterFreq, 5);
+    filter.set(filterFreq, 5);
     // let spectrum = fft.analyze();
     // noStroke();
     // for (let i = 0; i < spectrum.length; i++) {
