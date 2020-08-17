@@ -65,15 +65,16 @@ function setup() {
 
   canvas.parent('sketch-holder')
 
-  filter = new p5.BandPass();
+  // filter = new p5.BandPass();
 
   noise = new p5.AudioIn();
 
-  noise.disconnect(); // Disconnect soundfile from master output...
-  filter.process(noise); // ...and connect to filter so we'll only hear BandPass.
+  // noise.disconnect(); // Disconnect soundfile from master output...
+  // filter.process(noise); // ...and connect to filter so we'll only hear BandPass.
   noise.start();
 
   fft = new p5.FFT();
+  fft.setInput(noise);
 
   Plotly.plot('chart',[{
     y:fft.analyze(),
@@ -101,7 +102,7 @@ function draw() {
 
   startMic()
 
-  filter.set(filterFreq, 5);
+  // filter.set(filterFreq, 5);
 
   // Draw every value in the FFT spectrum analysis where
   // x = lowest (10Hz) to highest (22050Hz) frequencies,
