@@ -19,7 +19,12 @@ let abortMotor = false
 let maxInt = 0
 let filterFreq = 10000
 
+//Define RAW array
 let arrPat = []
+
+//Define array for Ploting
+let arrNormal = []
+let arrNearest = []
 
 function assignArray(x, y, array) {
   array.pop()
@@ -48,6 +53,20 @@ function assignArray(x, y, array) {
   return result.reverse()
 }
 
+function assignArrayNearest(array) {
+  let result = []
+  for (let i = 0; i < array.length; i++) {
+    let arrayTemp = []
+    for (let j = 0; j < array[i].length; j++) {
+      arrayTemp.push(array[i][j])
+      arrayTemp.push(array[i][j])
+    }
+    result.push(arrayTemp)
+    result.push(arrayTemp)
+  }
+  return result
+}
+
 function convertCSV(array) {
   let result = []
   array.forEach(element => {
@@ -57,29 +76,35 @@ function convertCSV(array) {
   return result.join('\n')
 }
 
-function plotNormal(array) {
+function plotHeatmap(array, title, div) {
   var data = [ {
     z: array,
     type: 'heatmap',
-    colorbar:{
-      ticks: 'outside',
-      dtick: 1,
-      tickwidth: 2,
-      ticklen: 10,
-      tickcolor: 'grey',
-      showticklabels: true,
-      tickfont: {
-        size: 15
-      },
-      xpad: 50
-    }
+    zsmooth: 'best'
   }];
   
   var layout = {
-    title: 'Normal'
+    title: title,
+    xaxis: {
+      scaleanchor: "y",
+      constrain: "domain",
+      constraintoward: "left",
+      showgrid: false, 
+      zeroline: false,
+      visible: false
+    },
+    yaxis: {
+      scaleanchor: "x",
+      constrain: "domain",
+      showgrid: false, 
+      zeroline: false,
+      visible: false
+    },
+    width: 900,
+    height: 900
   };
   
-  Plotly.newPlot('plotnormal', data, layout);
+  Plotly.newPlot(div, data, layout);
 }
 
 function setup() {
@@ -215,11 +240,15 @@ patsubmit.addEventListener('click', (event) => {
               }
               const path = dialog.showSaveDialogSync(options)
               console.log("SAVE DIALOG", path)
-              let arrayData =  assignArray(motorData.xaxis, motorData.yaxis, arrPat)
-              let csvData = convertCSV(arrayData)
-              fs.writeFileSync(path, csvData, 'utf8')
+              arrNormal =  assignArray(motorData.xaxis, motorData.yaxis, arrPat)
+              arrNearest = assignArrayNearest(arrNormal)
+              let csvData = convertCSV(arrNormal)
+              let csvDataNearest = convertCSV(arrNearest)
+              fs.writeFileSync(path+".csv", csvData, 'utf8')
+              fs.writeFileSync(path+"-Nearest.csv", csvDataNearest, 'utf8')
               console.log("Capturing Done", "CSV sukses")
-              plotNormal(arrayData)
+              plotHeatmap(arrNormal, "Normal", "plotnormal")
+              plotHeatmap(arrNearest, "Nearest", "plotnearest")
             }
             abortMotor = false;
         }
