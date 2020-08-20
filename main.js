@@ -6,7 +6,10 @@ let templateMenu = [
         label: 'File',
         submenu: [
             {
-                label: 'Import'
+                label: 'Import',
+                click: function () {
+                    ipcRenderer.send('tog-importWindow')
+                }
             },
             {
                 label: 'Export'

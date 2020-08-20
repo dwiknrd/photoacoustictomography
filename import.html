@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="css/skeleton.css">
+  <link rel="stylesheet" href="css/verticaltab.css">
+  <script src="verticaltab.js"></script>
+  <script src="plotly/plotly.min.js"></script>
+  <title>Photoacoustic Tomography - Universitas Gadjah Mada</title>
+</head>
+<body>
+  <div class="container">
+    <!-- Row 1 Untuk Banner Dll -->
+    <div class="row">
+      <br><br>
+      <h2 align="center">IMPORT CSV</h2>
+      <br><br>
+    </div>
+    <!-- Row 2 Untuk status dann slot gambar -->
+    <div class="row">
+      <!-- Kolom 1 Untuk Status -->
+      <div style="border: 2px solid #ccc; padding: 30px; padding-bottom: 0;">
+        <form action="">
+          <div class="row">
+            <div class="eight columns">
+              Import Normal CSV File
+            </div>
+            <div class="four columns">
+              <input id="browseNormal" class="button-primary" style="width: 100%;" type="submit" value="Browse">
+            </div>
+          </div>
+          <div class="row">
+            <br>
+            <input id="normaldir" class="u-full-width" type="text" name="normaldir" disabled>
+          </div>
+          <br>
+          <div class="row">
+              <div class="eight columns">
+                Import Nearest CSV File
+              </div>
+              <div class="four columns">
+                <input id="browseNearest" class="button-primary" style="width: 100%;" type="submit" value="Browse">
+              </div>
+          </div>
+          <div class="row">
+            <br>
+            <input id="nearestdir" class="u-full-width" type="text" name="nearestdir" disabled>
+          </div>
+        </form>
+      </div>
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="tab">
+          <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'normal')">Normal</button>
+          <button class="tablinks" onclick="openCity(event, 'normaljet')">Normal Jet</button>
+          <button class="tablinks" onclick="openCity(event, 'nearest')">Nearest</button>
+          <button class="tablinks" onclick="openCity(event, 'nearestjet')">Nearest Jet</button>
+        </div>
+        
+        <div id="normal" class="tabcontent">
+          <div id="plotnormal"></div>
+        </div>
+  
+        <div id="normaljet" class="tabcontent">
+          <div id="plotnormaljet"></div>
+        </div>
+        
+        <div id="nearest" class="tabcontent">
+          <div id="plotnearest"></div>
+        </div>
+  
+        <div id="nearestjet" class="tabcontent">
+          <div id="plotnearestjet"></div>
+        </div>
+    </div>
+  </div>
+  <script src="import.js"></script>
+</body>
+</html>

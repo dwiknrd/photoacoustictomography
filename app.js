@@ -19,6 +19,7 @@ let laserWindow = null
 let detectorWindow = null
 let stepMotorWindow = null
 let patWindow = null
+let importWindow = null
 
 function mainWindowFunc () {
     mainWindow = new BrowserWindow({
@@ -56,6 +57,23 @@ function laserWindowFunc () {
     laserWindow.on('close', function(evt) {
         evt.preventDefault();
         laserWindow.hide()
+    })
+}
+
+function importWindowFunc () {
+    importWindow = new BrowserWindow({
+        webPreferences: {
+            nodeIntegration: true
+        },
+        show : false
+    })
+
+    importWindow.webContents.loadURL(`file://${__dirname}/import.html`)
+    importWindow.openDevTools()
+
+    importWindow.on('close', function(evt) {
+        evt.preventDefault();
+        importWindow.hide()
     })
 }
 
@@ -115,6 +133,7 @@ app.on('ready', function() {
     console.log('Hello from electron')
     mainWindowFunc()
     laserWindowFunc()
+    importWindowFunc()
     detectorWindowFunc()
     stepMotorWindowFunc()
     patWindowFunc()
@@ -129,6 +148,15 @@ app.on('ready', function() {
         }
         else {
             laserWindow.show()
+        }
+    })
+
+    ipcMain.on('tog-importWindow', function() {
+        if(importWindow.isVisible()) {
+            importWindow.hide()
+        }
+        else {
+            importWindow.show()
         }
     })
 
