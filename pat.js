@@ -82,6 +82,13 @@ function plotHeatmap(array, title, div) {
     type: 'heatmap',
     zsmooth: 'best'
   }];
+
+  var dataJet = [ {
+    z: array,
+    type: 'heatmap',
+    zsmooth: 'best',
+    colorscale: 'Jet'
+  }];
   
   var layout = {
     title: title,
@@ -105,6 +112,8 @@ function plotHeatmap(array, title, div) {
   };
   
   Plotly.newPlot(div, data, layout);
+  layout.title = title+" Jet"
+  Plotly.newPlot(div+"jet", dataJet, layout);
 }
 
 function setup() {

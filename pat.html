@@ -94,33 +94,25 @@
     <div class="row">
       <div class="tab">
         <button class="tablinks" id="defaultOpen" onclick="openCity(event, 'normal')">Normal</button>
+        <button class="tablinks" onclick="openCity(event, 'normaljet')">Normal Jet</button>
         <button class="tablinks" onclick="openCity(event, 'nearest')">Nearest</button>
-        <button class="tablinks" onclick="openCity(event, 'bilinier')">Bilinier</button>
-        <button class="tablinks" onclick="openCity(event, 'cubic')">Cubic</button>
-        <button class="tablinks" onclick="openCity(event, 'bicubic')">Bicubic</button>
+        <button class="tablinks" onclick="openCity(event, 'nearestjet')">Nearest Jet</button>
       </div>
       
       <div id="normal" class="tabcontent">
         <div id="plotnormal"></div>
+      </div>
+
+      <div id="normaljet" class="tabcontent">
+        <div id="plotnormaljet"></div>
       </div>
       
       <div id="nearest" class="tabcontent">
         <div id="plotnearest"></div>
       </div>
 
-      <div id="bilinier" class="tabcontent">
-        <h3>Bilinier</h3>
-        <p>Disini tempatnya gambar Bilinier.</p>
-      </div>
-
-      <div id="cubic" class="tabcontent">
-        <h3>Cubic</h3>
-        <p>Disini tempatnya gambar Cubic.</p>
-      </div>
-
-      <div id="bicubic" class="tabcontent">
-        <h3>Bicubic</h3>
-        <p>Disini tempatnya gambar Bicubic.</p>
+      <div id="nearestjet" class="tabcontent">
+        <div id="plotnearestjet"></div>
       </div>
 
     </div>
