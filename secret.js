@@ -3,10 +3,18 @@ const {dialog} = require('electron').remote
 const fs = require('fs')
 
 let browseNormal = document.getElementById('browseNormal')
-let browseNearest = document.getElementById('browseNearest')
+let repairdataButton = document.getElementById('repairdataButton')
+let saveCSV = document.getElementById('saveCSV')
+
+let threshold = document.getElementById('threshold')
 
 let normaldir = document.getElementById('normaldir')
-let nearestdir = document.getElementById('nearestdir')
+
+
+let path = ""
+let arrNormal = []
+let repairedData = []
+let nearestRepairedData = []
 
 function parseCSV(string) {
     let result = []
@@ -18,6 +26,46 @@ function parseCSV(string) {
     });
 
     return result
+}
+
+function repairData(array, threshold) {
+  for (let i = 0; i < array.length; i++) {
+    for (let j = 0; j < array[i].length; j++) {
+      if(array[i][j] >= threshold) {
+        let arrayFilter = array[i].filter(arr => arr < threshold)
+        let sumArray = 0
+        arrayFilter.forEach((arr) => {
+          sumArray += arr
+        })
+        let avg = sumArray / arrayFilter.length
+        array[i][j] = avg
+      }
+    }
+  }
+  return array
+}
+
+function convertCSV(array) {
+  let result = []
+  array.forEach(element => {
+    result.push(element.join(","))
+  });
+
+  return result.join('\n')
+}
+
+function assignArrayNearest(array) {
+  let result = []
+  for (let i = 0; i < array.length; i++) {
+    let arrayTemp = []
+    for (let j = 0; j < array[i].length; j++) {
+      arrayTemp.push(array[i][j])
+      arrayTemp.push(array[i][j])
+    }
+    result.push(arrayTemp)
+    result.push(arrayTemp)
+  }
+  return result
 }
 
 function plotHeatmap(array, title, div) {
@@ -69,28 +117,37 @@ browseNormal.addEventListener('click', (event) => {
           { name: 'All Files', extensions: ['*'] }
         ]
       }
-    const path = dialog.showOpenDialogSync(options)[0]
+    path = dialog.showOpenDialogSync(options)[0]
     console.log(path)
     const array = fs.readFileSync(path,'utf8')
-    let arrNormal = parseCSV(array)
+    arrNormal = parseCSV(array)
     normaldir.value = path
-    plotHeatmap(arrNormal, "Normal", "plotnormal")
-
   })
 
-  browseNearest.addEventListener('click', (event) => {
+repairdataButton.addEventListener('click', (event) => {
+    event.preventDefault()
+
+    repairedData = repairData(arrNormal, threshold.value)
+    nearestRepairedData = assignArrayNearest(repairedData)
+    plotHeatmap(repairedData, "Normal", "plotnormal")
+    plotHeatmap(nearestRepairedData, "Nearest", "plotnearest")
+  })
+
+saveCSV.addEventListener('click', (event) => {
     event.preventDefault()
 
     const options = {
-        filters: [
-          { name: 'CSV', extensions: ['csv'] },
-          { name: 'All Files', extensions: ['*'] }
-        ]
-      }
-    const path = dialog.showOpenDialogSync(options)[0]
-    console.log(path)
-    const array = fs.readFileSync(path,'utf8')
-    let arrNearest = parseCSV(array)
-    nearestdir.value = path
-    plotHeatmap(arrNearest, "Nearest", "plotnearest")
-  })
+      filters: [
+        { name: 'CSV', extensions: ['csv'] },
+        { name: 'All Files', extensions: ['*'] }
+      ]
+    }
+    const path = dialog.showSaveDialogSync(options)
+    if(path !== undefined) {
+      let csvData = convertCSV(repairedData)
+      let csvDataNearest = convertCSV(nearestRepairedData)
+      fs.writeFileSync(path+"-Repaired.csv", csvData, 'utf8')
+      fs.writeFileSync(path+"-Nearest-Repaired.csv", csvDataNearest, 'utf8')
+      console.log("Capturing Done", "CSV sukses")
+    } 
+})

@@ -266,10 +266,12 @@ patsubmit.addEventListener('click', (event) => {
                 ]
               }
               const path = dialog.showSaveDialogSync(options)
-              console.log("SAVE DIALOG", path)
-              fs.writeFileSync(path+".csv", csvData, 'utf8')
-              fs.writeFileSync(path+"-Nearest.csv", csvDataNearest, 'utf8')
-              console.log("Capturing Done", "CSV sukses")
+              if(path !== undefined) {
+                console.log("SAVE DIALOG", path)
+                fs.writeFileSync(path+".csv", csvData, 'utf8')
+                fs.writeFileSync(path+"-Nearest.csv", csvDataNearest, 'utf8')
+                console.log("Capturing Done", "CSV sukses")
+              }
             }
             abortMotor = false;
         }
@@ -294,9 +296,11 @@ ipcRenderer.on('export-csv', function() {
       ]
     }
     const path = dialog.showSaveDialogSync(options)
-    let csvData = convertCSV(arrNormal)
-    let csvDataNearest = convertCSV(arrNearest)
-    fs.writeFileSync(path+".csv", csvData, 'utf8')
-    fs.writeFileSync(path+"-Nearest.csv", csvDataNearest, 'utf8')
-    console.log("Capturing Done", "CSV sukses")
+    if(path !== undefined) {
+      let csvData = convertCSV(arrNormal)
+      let csvDataNearest = convertCSV(arrNearest)
+      fs.writeFileSync(path+".csv", csvData, 'utf8')
+      fs.writeFileSync(path+"-Nearest.csv", csvDataNearest, 'utf8')
+      console.log("Capturing Done", "CSV sukses")
+    } 
 })
