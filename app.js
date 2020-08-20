@@ -141,6 +141,10 @@ app.on('ready', function() {
     ipcMain.on('quit-app', function() {
         app.quit()
     })
+
+    ipcMain.on('export-csv', function() {
+        patWindow.webContents.send('export-csv')
+    })
     
     ipcMain.on('tog-laserWindow', function() {
         if(laserWindow.isVisible()) {

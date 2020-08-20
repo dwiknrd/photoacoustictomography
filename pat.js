@@ -253,6 +253,12 @@ patsubmit.addEventListener('click', (event) => {
             }
             else{
               progressbarLabel.innerText = "Completed!"
+              arrNormal =  assignArray(motorData.xaxis, motorData.yaxis, arrPat)
+              arrNearest = assignArrayNearest(arrNormal)
+              let csvData = convertCSV(arrNormal)
+              let csvDataNearest = convertCSV(arrNearest)
+              plotHeatmap(arrNormal, "Normal", "plotnormal")
+              plotHeatmap(arrNearest, "Nearest", "plotnearest")
               const options = {
                 filters: [
                   { name: 'CSV', extensions: ['csv'] },
@@ -261,15 +267,9 @@ patsubmit.addEventListener('click', (event) => {
               }
               const path = dialog.showSaveDialogSync(options)
               console.log("SAVE DIALOG", path)
-              arrNormal =  assignArray(motorData.xaxis, motorData.yaxis, arrPat)
-              arrNearest = assignArrayNearest(arrNormal)
-              let csvData = convertCSV(arrNormal)
-              let csvDataNearest = convertCSV(arrNearest)
               fs.writeFileSync(path+".csv", csvData, 'utf8')
               fs.writeFileSync(path+"-Nearest.csv", csvDataNearest, 'utf8')
               console.log("Capturing Done", "CSV sukses")
-              plotHeatmap(arrNormal, "Normal", "plotnormal")
-              plotHeatmap(arrNearest, "Nearest", "plotnearest")
             }
             abortMotor = false;
         }
@@ -285,3 +285,18 @@ abortbutton.addEventListener('click', (event) => {
     progressbarLabel.innerText = "Aborted!"
     abortMotor = true
   })
+
+ipcRenderer.on('export-csv', function() {
+    const options = {
+      filters: [
+        { name: 'CSV', extensions: ['csv'] },
+        { name: 'All Files', extensions: ['*'] }
+      ]
+    }
+    const path = dialog.showSaveDialogSync(options)
+    let csvData = convertCSV(arrNormal)
+    let csvDataNearest = convertCSV(arrNearest)
+    fs.writeFileSync(path+".csv", csvData, 'utf8')
+    fs.writeFileSync(path+"-Nearest.csv", csvDataNearest, 'utf8')
+    console.log("Capturing Done", "CSV sukses")
+})

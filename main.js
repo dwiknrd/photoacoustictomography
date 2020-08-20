@@ -12,7 +12,10 @@ let templateMenu = [
                 }
             },
             {
-                label: 'Export'
+                label: 'Export',
+                click: function () {
+                    ipcRenderer.send('export-csv')
+                }
             },
             {
                 label: 'Exit',
