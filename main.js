@@ -82,6 +82,17 @@ let templateMenu = [
                 }
             }
         ]
+    },
+    {
+        label: 'Help',
+        submenu: [
+            {
+                label: 'About',
+                click: function () {
+                    ipcRenderer.send('tog-aboutWindow')
+                }
+            }
+        ]
     }
 ]
 

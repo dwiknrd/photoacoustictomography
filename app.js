@@ -20,6 +20,8 @@ let detectorWindow = null
 let stepMotorWindow = null
 let patWindow = null
 let importWindow = null
+let aboutWindow = null
+let secretWindow = null
 
 function mainWindowFunc () {
     mainWindow = new BrowserWindow({
@@ -36,7 +38,6 @@ function mainWindowFunc () {
     })
 
     mainWindow.webContents.loadURL(`file://${__dirname}/index.html`)
-    // mainWindow.openDevTools()
     
     mainWindow.on('closed', function() {
         mainWindow = null
@@ -57,6 +58,40 @@ function laserWindowFunc () {
     laserWindow.on('close', function(evt) {
         evt.preventDefault();
         laserWindow.hide()
+    })
+}
+
+function aboutWindowFunc () {
+    aboutWindow = new BrowserWindow({
+        width: 400,
+        height: 400,
+        webPreferences: {
+            nodeIntegration: true
+        },
+        show : false
+    })
+
+    aboutWindow.webContents.loadURL(`file://${__dirname}/about.html`)
+
+    aboutWindow.on('close', function(evt) {
+        evt.preventDefault();
+        aboutWindow.hide()
+    })
+}
+
+function secretWindowFunc () {
+    secretWindow = new BrowserWindow({
+        webPreferences: {
+            nodeIntegration: true
+        },
+        show : false
+    })
+
+    secretWindow.webContents.loadURL(`file://${__dirname}/secret.html`)
+
+    secretWindow.on('close', function(evt) {
+        evt.preventDefault();
+        secretWindow.hide()
     })
 }
 
@@ -137,9 +172,32 @@ app.on('ready', function() {
     detectorWindowFunc()
     stepMotorWindowFunc()
     patWindowFunc()
+    aboutWindowFunc()
+    secretWindowFunc()
 
     ipcMain.on('quit-app', function() {
         app.quit()
+    })
+
+    ipcMain.on('open-secretwindow', function() {
+        if(aboutWindow.isVisible()) {
+            aboutWindow.hide()
+        }
+        if(secretWindow.isVisible()) {
+            secretWindow.hide()
+        }
+        else {
+            secretWindow.show()
+        }
+    })
+
+    ipcMain.on('tog-aboutWindow', function() {
+        if(aboutWindow.isVisible()) {
+            aboutWindow.hide()
+        }
+        else {
+            aboutWindow.show()
+        }
     })
 
     ipcMain.on('export-csv', function() {
