@@ -10,6 +10,9 @@ let xaxis = document.getElementById('xaxis')
 let yaxis = document.getElementById('yaxis')
 let delay = document.getElementById('delay')
 
+let progressbar = document.getElementById('scanProgress')
+let progressbarLabel = document.getElementById('scanLabel')
+
 let abortbutton = document.getElementById('abortbutton')
 
 let patsubmit = document.getElementById('patsubmit')
@@ -166,6 +169,9 @@ patsubmit.addEventListener('click', (event) => {
         delay : delay.value
     }
 
+    progressbar.value = 0
+    progressbar.max = motorData.xaxis * motorData.yaxis
+
     if (range.value * 10 % 2 != 0) {
         alert('Range harus bernilai kelipatan 0.2')
     }
@@ -199,7 +205,7 @@ patsubmit.addEventListener('click', (event) => {
         }
         
         async function runMotor(motorData) {
-        
+          progressbarLabel.innerText = "Scanning..."
           let toRight = true
         
             for (let i = 0; i < motorData.yaxis; i++) {
@@ -215,6 +221,7 @@ patsubmit.addEventListener('click', (event) => {
                 if(i == 0 && j == 0) {
                   await sleep(motorData.delay)
                   arrPat.push(maxInt)
+                  progressbar.value++
                   console.log('intencity', maxInt)
                 }
                 
@@ -222,12 +229,14 @@ patsubmit.addEventListener('click', (event) => {
                   ipcRenderer.send('stepmotor-right')
                   await sleep(motorData.delay)
                   arrPat.push(maxInt)
+                  progressbar.value++
                   console.log('intencity', maxInt)
                 }
                 else{
                   ipcRenderer.send('stepmotor-left')
                   await sleep(motorData.delay)
                   arrPat.push(maxInt)
+                  progressbar.value++
                   console.log('intencity', maxInt)
                 }
               }
@@ -235,12 +244,15 @@ patsubmit.addEventListener('click', (event) => {
               ipcRenderer.send('stepmotor-down')
               await sleep(motorData.delay)
               arrPat.push(maxInt)
+              progressbar.value++
               console.log('intencity', maxInt)
             }
             if(abortMotor) {
               console.log("Capturing Done", assignArray(motorData.xaxis, motorData.yaxis, arrPat))
+              progressbar.value = 0
             }
             else{
+              progressbarLabel.innerText = "Completed!"
               const options = {
                 filters: [
                   { name: 'CSV', extensions: ['csv'] },
@@ -270,5 +282,6 @@ patsubmit.addEventListener('click', (event) => {
 abortbutton.addEventListener('click', (event) => {
     event.preventDefault() 
     console.log('abort button kepencet')
+    progressbarLabel.innerText = "Aborted!"
     abortMotor = true
   })

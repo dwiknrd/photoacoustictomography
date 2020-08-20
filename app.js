@@ -69,7 +69,7 @@ function importWindowFunc () {
     })
 
     importWindow.webContents.loadURL(`file://${__dirname}/import.html`)
-    importWindow.openDevTools()
+    // importWindow.openDevTools()
 
     importWindow.on('close', function(evt) {
         evt.preventDefault();
