@@ -156,7 +156,7 @@ function patWindowFunc () {
     })
 
     patWindow.webContents.loadURL(`file://${__dirname}/pat.html`)
-    patWindow.webContents.openDevTools()
+    // patWindow.webContents.openDevTools()
 
     patWindow.on('close', function(evt) {
         evt.preventDefault();
