@@ -31,11 +31,11 @@ function parseCSV(string) {
 function repairData(array, threshold) {
   for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < array[i].length; j++) {
-      if(array[i][j] >= threshold) {
-        let arrayFilter = array[i].filter(arr => arr < threshold)
+      if(Number(array[i][j]) >= threshold) {
+        let arrayFilter = array[i].filter(arr => Number(arr) < threshold)
         let sumArray = 0
         arrayFilter.forEach((arr) => {
-          sumArray += arr
+          sumArray += Number(arr)
         })
         let avg = sumArray / arrayFilter.length
         array[i][j] = avg
