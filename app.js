@@ -63,8 +63,8 @@ function laserWindowFunc () {
 
 function aboutWindowFunc () {
     aboutWindow = new BrowserWindow({
-        width: 400,
-        height: 400,
+        width: 500,
+        height: 500,
         webPreferences: {
             nodeIntegration: true
         },
