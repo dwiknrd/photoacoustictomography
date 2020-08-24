@@ -152,7 +152,8 @@ function setup() {
       rect(x, height, width / spectrum.length, h);
     }
 
-    maxInt = fft.getEnergy(filterFreq-500, filterFreq+500)
+    // maxInt = fft.getEnergy(filterFreq-500, filterFreq+500)
+    maxInt = fft.getEnergy(filterFreq)
   }
 
 patsubmit.addEventListener('click', (event) => {
