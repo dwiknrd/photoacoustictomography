@@ -135,6 +135,7 @@ browseNormal.addEventListener('click', (event) => {
     const array = fs.readFileSync(path,'utf8')
     arrNormal = parseCSV(array)
     normaldir.value = path
+    plotHeatmap(arrNormal, "Normal", "plotnormal")
   })
 
 repairdataButton.addEventListener('click', (event) => {
