@@ -10,6 +10,12 @@ let threshold = document.getElementById('threshold')
 
 let normaldir = document.getElementById('normaldir')
 
+let xaxis = document.getElementById('xaxis')
+let yaxis = document.getElementById('yaxis')
+let xyvalue = document.getElementById('xyvalue')
+let replacevalue = document.getElementById('replacevalue')
+
+
 
 let path = ""
 let arrNormal = []
@@ -41,6 +47,13 @@ function repairData(array, threshold) {
         array[i][j] = avg
       }
     }
+  }
+  return array
+}
+
+function replaceData(array,x,y,value) {
+  if(array[y][x] !== undefined) {
+    array[y][x] = value
   }
   return array
 }
@@ -127,11 +140,30 @@ browseNormal.addEventListener('click', (event) => {
 repairdataButton.addEventListener('click', (event) => {
     event.preventDefault()
 
-    repairedData = repairData(arrNormal, threshold.value)
+    if(repairedData.length == 0) {
+      repairedData = repairData(arrNormal, threshold.value)
+    }
+    else {
+      repairedData = repairData(repairedData, threshold.value)
+    }
     nearestRepairedData = assignArrayNearest(repairedData)
     plotHeatmap(repairedData, "Normal", "plotnormal")
     plotHeatmap(nearestRepairedData, "Nearest", "plotnearest")
   })
+
+replacevalue.addEventListener('click', (event) => {
+    event.preventDefault()
+
+    if(repairedData.length == 0) {
+      repairedData = replaceData(arrNormal, xaxis.value, yaxis.value, xyvalue.value)
+    }
+    else {
+      repairedData = replaceData(repairedData, xaxis.value, yaxis.value, xyvalue.value)
+    }
+    nearestRepairedData = assignArrayNearest(repairedData)
+    plotHeatmap(repairedData, "Normal", "plotnormal")
+    plotHeatmap(nearestRepairedData, "Nearest", "plotnearest")
+})
 
 saveCSV.addEventListener('click', (event) => {
     event.preventDefault()
