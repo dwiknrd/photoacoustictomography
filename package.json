@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
-    "rebuild": "electron-rebuild -f -w yourmodule"
+    "rebuild": "electron-rebuild -f -w yourmodule",
+    "package-linux": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=linux --arch=x64 --icon=images/favicon.png --prune=true --out=release-builds"
   },
   "author": "",
   "license": "ISC",
