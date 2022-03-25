@@ -13,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "electron": "^7.1.10",
+    "electron": "^13.6.6",
     "serialport": "^8.0.7"
   },
   "devDependencies": {
